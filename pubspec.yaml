@@ -1,0 +1,29 @@
+name: local_music_player
+description: A new Flutter application.
+
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  path: ^1.8.0
+  provider: ^5.0.0
+  path_provider_ex: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+
+  uses-material-design: true
