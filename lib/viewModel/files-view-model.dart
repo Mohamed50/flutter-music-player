@@ -10,6 +10,11 @@ class FilesViewModel with ChangeNotifier {
   List<Directory> _directories = [];
   List<Directory> get directories => _directories;
 
+  FilesViewModel(){
+    directories.add(Directory("/storage/emulated/0/"));
+    fetchAllAudioFilesFromDirectories();
+  }
+
   fetchAllAudioFilesFromDirectory(Directory directory) async {
     List<FileSystemEntity> allFiles = directory.listSync(recursive: true, followLinks: false);
     _files.addAll(allFiles.where((file) => supportedAudioExtensions.any((extension) => file.path.endsWith(extension))));

@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/presenter/file-presenter.dart';
 import 'package:local_music_player/viewModel/files-view-model.dart';
+import 'package:local_music_player/views/player.dart';
 import 'package:provider/provider.dart';
 
 class TestWidget extends StatelessWidget {
@@ -25,17 +26,18 @@ class TestWidget extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: files.length,
                   itemBuilder: (context, index) => ListTile(
+                    onTap: () async {
+                      Track track = Track(
+                          Provider.of<FilesViewModel>(context, listen: false)
+                              .files
+                              .first
+                              .path);
+                      await Future.delayed(Duration(milliseconds: 300));
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PlayerPage(track: track),
+                      ));
+                    },
                     title: Text(files[index].path),
-                    subtitle: FutureBuilder<Metadata>(
-                      future: fetchMetaData(files[index]),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Metadata> snapshot) {
-                        if (!snapshot.hasData)
-                          return CircularProgressIndicator();
-                        else
-                          return Text(snapshot.data.albumName.toString());
-                      },
-                    ),
                   ),
                 ),
               ),
@@ -45,12 +47,4 @@ class TestWidget extends StatelessWidget {
       ),
     );
   }
-
-  Future<Metadata> fetchMetaData(FileSystemEntity fileSystemEntity) async {
-    var retriever = new MetadataRetriever();
-    await retriever.setFile(new File(fileSystemEntity.path));
-    return await retriever.metadata;
-  }
-
-
 }
