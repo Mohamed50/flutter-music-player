@@ -1,27 +1,32 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-List<String> supportedAudioExtensions = ["mp3", "flac"];
+List<String> supportedAudioExtensions = ["mp3", "flac","m4a"];
 
 class FilesViewModel with ChangeNotifier {
-
   List<FileSystemEntity> _files = [];
   List<FileSystemEntity> get files => _files;
 
-  FilesViewModel() {
-    fetchAllAudioFilesFromInternalStorage();
-  }
+  List<Directory> _directories = [];
+  List<Directory> get directories => _directories;
 
-  fetchAllAudioFilesFromInternalStorage() async {
-    Directory externalStorageDir = Directory("/storage/emulated/0/");
-    List<FileSystemEntity> allFiles =
-        externalStorageDir.listSync(recursive: true, followLinks: false);
-    _files = allFiles
-        .where((file) => supportedAudioExtensions
-            .any((extension) => file.path.endsWith(extension)))
-        .toList();
-    print(externalStorageDir);
+  fetchAllAudioFilesFromDirectory(Directory directory) async {
+    List<FileSystemEntity> allFiles = directory.listSync(recursive: true, followLinks: false);
+    _files.addAll(allFiles.where((file) => supportedAudioExtensions.any((extension) => file.path.endsWith(extension))));
     notifyListeners();
   }
+
+  addDirectory(Directory directory) {
+    _directories.add(directory);
+    fetchAllAudioFilesFromDirectory(directory);
+  }
+
+  fetchAllAudioFilesFromDirectories(){
+    _files.clear();
+    directories.forEach((directory) {
+      fetchAllAudioFilesFromDirectory(directory);
+    });
+  }
+
 
 }
