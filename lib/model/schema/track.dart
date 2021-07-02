@@ -22,7 +22,8 @@ class Track{
   }
 
   init() async{
-    name = path.split("/").last.split(".").first;
+    List<String> list = path.split("/").last.split(".")..removeLast();
+    name = list.last;
     metadata = await fetchMetaData(path);
     coverArt = await fetchCoverArt();
     dominateColor = await fetchDominateColor();
@@ -40,15 +41,16 @@ class Track{
   }
 
   Future<Color> fetchDominateColor() async{
-    Size size = Size(120.0, 120.0);
+    Size size = Size(500.0, 500.0);
     PaletteGenerator paletteGenerator = await PaletteGenerator.fromImageProvider(
       MemoryImage(coverArt),
       size: size,
       region: Offset.zero & size,
-      maximumColorCount: 1,
+      maximumColorCount: 20,
     );
-    secondaryColor = paletteGenerator.dominantColor.titleTextColor;
-    return paletteGenerator.dominantColor.color;
+    accentColor = paletteGenerator.dominantColor.color;
+    secondaryColor = paletteGenerator.vibrantColor.titleTextColor;
+    return paletteGenerator.vibrantColor.color;
   }
 
   Color fetchAccentColor(){

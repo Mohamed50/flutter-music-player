@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'play-button.dart';
+
 class PlayerButtons extends StatelessWidget {
   final Color primaryColor;
   final Color secondaryColor;
@@ -18,11 +20,8 @@ class PlayerButtons extends StatelessWidget {
           color: secondaryColor,
           onPressed: () {},
         ),
-        IconButton(
-          icon: Icon(Icons.play_arrow_rounded),
-          iconSize: 70.0,
-          color: primaryColor,
-          onPressed: () {},
+        PlayButton(
+          primaryColor: primaryColor,
         ),
         IconButton(
           icon: Icon(Icons.fast_forward_rounded),

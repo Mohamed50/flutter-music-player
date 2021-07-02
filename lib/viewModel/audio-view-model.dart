@@ -1,25 +1,24 @@
-import 'package:afnan_ivr_portal/data/service/announcement-service.dart';
-import 'package:afnan_ivr_portal/data/model/announcement.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:local_music_player/model/schema/track.dart';
 
-class AudioViewModel with ChangeNotifier{
-  AnnouncementService _announcementService = AnnouncementService();
+class PlayerViewModel with ChangeNotifier{
   AudioPlayer _audioPlayer;
 
-  Announcement _announcement;
-  Announcement get announcement => _announcement;
 
-  AudioPlayerState _state = AudioPlayerState.COMPLETED;
-  AudioPlayerState get state => _state;
+  PlayerState _state = PlayerState.COMPLETED;
+  PlayerState get state => _state;
 
   Duration _position = Duration(seconds: 0);
   Duration get position => _position;
 
-  Duration _duration = Duration(seconds: 0);
+  Duration _duration = Duration(seconds: 100);
   Duration get duration => _duration;
 
-  AudioViewModel(){
+  Track _track;
+  Track get track => _track;
+
+  PlayerViewModel(){
     init();
     listenToPlayerState();
     listenToDuration();
@@ -27,7 +26,7 @@ class AudioViewModel with ChangeNotifier{
   }
 
   init(){
-    _audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER, playerId: "ivr-portal");
+    _audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER, playerId: "fifty-player");
     _audioPlayer.setReleaseMode(ReleaseMode.LOOP);
   }
 
@@ -53,15 +52,15 @@ class AudioViewModel with ChangeNotifier{
     });
   }
 
-  playAnnouncement(Announcement announcement){
-    _announcement = announcement;
+  playTrack(Track track){
+    _track = track;
     notifyListeners();
     play();
   }
 
   play(){
     _audioPlayer.play(
-      _announcementService.getAnnouncementURL(_announcement.title),
+      track.path,
       stayAwake: true,
       volume: 1.0,
     );
@@ -91,17 +90,32 @@ class AudioViewModel with ChangeNotifier{
     seek(_position.inSeconds - numOfSeconds);
   }
 
-  bool isPlaying(Announcement announcement){
-    return _state == AudioPlayerState.PLAYING && _announcement.id == announcement.id;
+  bool isPlaying(Track track){
+    return _state == PlayerState.PLAYING && _track.path == track.path;
   }
 
-  void handlePlayButton(bool value, Announcement announcement) {
-    if(_state == AudioPlayerState.COMPLETED || _state == AudioPlayerState.STOPPED || _announcement.id != announcement.id)
-      playAnnouncement(announcement);
-    else if(_state == AudioPlayerState.PAUSED)
+  // void handlePlayButton(Track track) {
+  //   if(_state == PlayerState.COMPLETED || _state == PlayerState.STOPPED || _track.path != _track.path)
+  //     playTrack(track);
+  //   else if(_state == PlayerState.PAUSED)
+  //     resume();
+  //   else
+  //     pause();
+  // }
+
+  void handlePlayButton() {
+    if(_state == PlayerState.COMPLETED || _state == PlayerState.STOPPED)
+      play();
+    else if(_state == PlayerState.PAUSED)
       resume();
     else
       pause();
+  }
+
+  void setTrack(Track track) {
+    _track = track;
+    _audioPlayer.setUrl(_track.path);
+    notifyListeners();
   }
 
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_music_player/utils/routes.dart';
+import 'package:local_music_player/viewModel/audio-view-model.dart';
 import 'package:local_music_player/viewModel/files-view-model.dart';
 import 'package:local_music_player/views/setting-handler.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,10 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => FilesViewModel(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PlayerViewModel(),
           lazy: false,
         ),
       ],

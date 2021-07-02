@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:local_music_player/viewModel/audio-view-model.dart';
+import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class CircularSlider extends StatelessWidget {
@@ -17,23 +19,34 @@ class CircularSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SleekCircularSlider(
-      min: 0,
-      max: 1000,
-      initialValue: 50,
-      appearance: CircularSliderAppearance(
-        size: MediaQuery.of(context).size.width,
-        customWidths: CustomSliderWidths(
-          progressBarWidth: 20.0,
+    return Selector<PlayerViewModel, Model>(
+      selector: (_, provider) => Model(provider.duration, provider.position),
+      builder: (context, model, child) => SleekCircularSlider(
+        min: 0,
+        max: model.duration.inSeconds.toDouble(),
+        initialValue: model.position.inSeconds.toDouble(),
+        appearance: CircularSliderAppearance(
+          size: MediaQuery.of(context).size.width,
+          customWidths: CustomSliderWidths(
+            progressBarWidth: 20.0,
+          ),
+          customColors: CustomSliderColors(
+              progressBarColor: progressBarColor,
+              dotColor: dotColor,
+              trackColor: trackColor,
+              shadowColor: trackColor,
+              shadowStep: 2),
         ),
-        customColors: CustomSliderColors(
-            progressBarColor: progressBarColor,
-            dotColor: dotColor,
-            trackColor: trackColor,
-            shadowColor: trackColor,
-            shadowStep: 2),
+        innerWidget: (double value) => child,
       ),
-      innerWidget: (double value) => child,
+      child: child,
     );
   }
+}
+
+class Model{
+  final Duration duration;
+  final Duration position;
+
+  Model(this.duration, this.position);
 }
