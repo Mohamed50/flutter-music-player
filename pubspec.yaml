@@ -18,6 +18,12 @@ dependencies:
   provider: ^5.0.0
   filesystem_picker: ^2.0.0-nullsafety.0
   flutter_media_metadata: ^0.1.0
+  palette_generator: ^0.3.0
+  sleek_circular_slider: ^2.0.1
+  tinycolor: ^1.0.3
+  shared_preferences: ^2.0.6
+  package_info: ^2.0.2
+  audioplayers: ^0.19.1
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +34,8 @@ flutter:
 
 
   uses-material-design: true
+
+  fonts:
+    - family: fira
+      fonts:
+        - asset: assets/fonts/FiraSans-Regular.ttf
