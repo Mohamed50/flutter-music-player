@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_music_player/model/schema/track.dart';
+import 'package:local_music_player/model/schema/media-type.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
 import 'package:provider/provider.dart';
 

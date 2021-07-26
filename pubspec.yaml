@@ -24,6 +24,8 @@ dependencies:
   shared_preferences: ^2.0.6
   package_info: ^2.0.2
   audioplayers: ^0.19.1
+  flutter_svg: ^0.22.0
+
 
 dev_dependencies:
   flutter_test:
@@ -34,6 +36,9 @@ flutter:
 
 
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/images/
 
   fonts:
     - family: fira

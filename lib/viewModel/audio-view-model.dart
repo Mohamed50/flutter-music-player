@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
-import 'package:local_music_player/model/schema/track.dart';
+import 'package:local_music_player/model/schema/media-type.dart';
 
 class PlayerViewModel with ChangeNotifier{
   AudioPlayer _audioPlayer;
@@ -60,7 +60,7 @@ class PlayerViewModel with ChangeNotifier{
 
   play(){
     _audioPlayer.play(
-      track.path,
+      track.filePath,
       stayAwake: true,
       volume: 1.0,
     );
@@ -91,7 +91,7 @@ class PlayerViewModel with ChangeNotifier{
   }
 
   bool isPlaying(Track track){
-    return _state == PlayerState.PLAYING && _track.path == track.path;
+    return _state == PlayerState.PLAYING && _track.filePath == track.filePath;
   }
 
   // void handlePlayButton(Track track) {
@@ -114,7 +114,7 @@ class PlayerViewModel with ChangeNotifier{
 
   void setTrack(Track track) {
     _track = track;
-    _audioPlayer.setUrl(_track.path);
+    _audioPlayer.setUrl(_track.filePath);
     notifyListeners();
   }
 

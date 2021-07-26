@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:local_music_player/utils/routes.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
-import 'package:local_music_player/viewModel/files-view-model.dart';
+import 'package:local_music_player/viewModel/collection.dart';
+import 'package:local_music_player/viewModel/tracks-view-model.dart';
 import 'package:local_music_player/views/setting-handler.dart';
 import 'package:provider/provider.dart';
 import 'config/Theme.dart';
@@ -19,7 +20,7 @@ class App extends StatelessWidget {
           lazy: false,
         ),
         ChangeNotifierProvider(
-          create: (context) => FilesViewModel(),
+          create: (context) => TrackViewModel(),
           lazy: false,
         ),
         ChangeNotifierProvider(

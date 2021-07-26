@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 String primaryFontFamily = "fira";
 
-Color primaryColor = Color(0xFFFFE6B4);
-Color accentColor = Color(0xFFFFE6B4);
-Color lightScaffoldBackgroundColor = Color(0xFFF5F5F5);
-Color lightBackgroundColor = Colors.white;
+Color primaryColor = Colors.deepPurple;
+Color accentColor = Colors.deepPurpleAccent;
+Color lightScaffoldBackgroundColor = Colors.black;
+Color lightBackgroundColor = Color(0xFF1A1A1A);
 Color lightCardColor = Colors.grey[100];
 Color lightIndicatorColor = Color(0xFF414042);
 Color lightTextColor = Colors.grey[900];

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_music_player/model/schema/track.dart';
-import 'package:local_music_player/presenter/player-presenter.dart';
+import 'package:local_music_player/model/schema/media-type.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
 import 'package:local_music_player/views/customs/app-bar.dart';
 import 'package:local_music_player/views/widgets/player/art-cover.dart';
@@ -21,7 +20,7 @@ class PlayerPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: track.dominateColor,
       appBar: CustomAppbar(
-        title: track.name,
+        title: track.trackName,
         backgroundColor: track.dominateColor,
         titleColor: track.accentColor,
       ),
@@ -36,7 +35,7 @@ class PlayerPage extends StatelessWidget {
               dotColor: track.dominateColor,
               trackColor: track.secondaryColor,
               child: ArtCover(
-                coverArt: track.coverArt,
+                coverArt: track.albumArt,
                 backgroundColor: track.dominateColor,
               ),
             ),
@@ -50,8 +49,8 @@ class PlayerPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             TrackInfo(
-              title: track.name,
-              artistName: track.metadata.albumArtistName,
+              title: track.trackName,
+              artistName: track.albumArtistName,
               textColor: track.accentColor,
             ),
             SizedBox(height: 16.0),

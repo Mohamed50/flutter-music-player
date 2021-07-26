@@ -1,10 +1,10 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import '../rotated-widget.dart';
 
 class ArtCover extends StatelessWidget {
-  final Uint8List coverArt;
+  final File coverArt;
   final Color backgroundColor;
 
   ArtCover({Key key, this.coverArt, this.backgroundColor}) : super(key: key);
@@ -28,7 +28,7 @@ class ArtCover extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ClipOval(
-                child: Image.memory(
+                child: Image.file(
                   coverArt,
                   fit: BoxFit.cover,
                   colorBlendMode: BlendMode.multiply,
