@@ -114,12 +114,15 @@ class TrackViewModel with ChangeNotifier {
       }
     }
     Album album = Album(
-        albumName: track.albumName,
-        albumArtistName: track.albumArtistName,
-        albumArtHigh: track.albumArtHigh,
-        albumArtLow: track.albumArtLow,
-        albumArtMedium: track.albumArtMedium)
-      ..tracks.add(track);
+      albumName: track.albumName,
+      albumArtistName: track.albumArtistName,
+      albumArtHigh: track.albumArtHigh,
+      albumArtLow: track.albumArtLow,
+      albumArtMedium: track.albumArtMedium,
+      dominateColor: track.dominateColor,
+      secondaryColor: track.secondaryColor,
+      accentColor: track.accentColor,
+    )..tracks.add(track);
     albums.add(album);
     addAlbumToArtist(album);
   }

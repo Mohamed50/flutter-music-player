@@ -4,6 +4,7 @@ import 'package:local_music_player/model/schema/media-type.dart';
 
 class PlayerViewModel with ChangeNotifier{
   AudioPlayer _audioPlayer;
+  static const int playerId = 153554645;
 
 
   PlayerState _state = PlayerState.COMPLETED;
@@ -26,7 +27,7 @@ class PlayerViewModel with ChangeNotifier{
   }
 
   init(){
-    _audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER, playerId: "fifty-player");
+    _audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER, playerId: playerId.toString());
     _audioPlayer.setReleaseMode(ReleaseMode.LOOP);
   }
 

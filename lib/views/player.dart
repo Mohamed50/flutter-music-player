@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
+import 'package:flutter_visualizers/visualizer.dart';
 import 'package:local_music_player/model/schema/media-type.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
 import 'package:local_music_player/views/customs/app-bar.dart';
@@ -37,6 +39,7 @@ class PlayerPage extends StatelessWidget {
               child: ArtCover(
                 coverArt: track.albumArt,
                 backgroundColor: track.dominateColor,
+                heroTag: track.filePath,
               ),
             ),
             Selector<PlayerViewModel, Duration>(
@@ -46,6 +49,20 @@ class PlayerPage extends StatelessWidget {
                 color: track.accentColor,
                 fontSize: 18.0,
               ),
+            ),
+            Visualizer(
+              builder: (BuildContext context, List<int> wave) {
+                return new CustomPaint(
+                  painter: LineVisualizer(
+                    waveData: wave,
+                    height: MediaQuery.of(context).size.height,
+                    width : MediaQuery.of(context).size.width,
+                    color: Colors.blueAccent,
+                  ),
+                  child: new Container(),
+                );
+              },
+              id: PlayerViewModel.playerId,
             ),
             SizedBox(height: 16.0),
             TrackInfo(

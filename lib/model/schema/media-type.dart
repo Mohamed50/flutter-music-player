@@ -121,6 +121,9 @@ class Album extends MediaType {
       return new File(path.join(configuration.cacheDirectory.path, 'albumArts', 'defaultAlbumArt' + '.PNG'));
   }
   String type = 'Album';
+  Color dominateColor;
+  Color secondaryColor;
+  Color accentColor;
 
   @override
   Map<String, dynamic> toMap() {
@@ -153,7 +156,7 @@ class Album extends MediaType {
     );
   }
 
-  Album({this.albumName, this.year, this.albumArtistName, this.albumArtHigh, this.albumArtMedium, this.albumArtLow, this.albumId});
+  Album({this.albumName, this.year, this.albumArtistName, this.albumArtHigh, this.albumArtMedium, this.albumArtLow, this.albumId, this.dominateColor, this.secondaryColor, this.accentColor});
 }
 
 

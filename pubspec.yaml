@@ -25,7 +25,7 @@ dependencies:
   package_info: ^2.0.2
   audioplayers: ^0.19.1
   flutter_svg: ^0.22.0
-
+  flutter_visualizers: ^0.0.2
 
 dev_dependencies:
   flutter_test:
