@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:local_music_player/config/configuration.dart';
 import 'package:local_music_player/utils/routes.dart';
 import 'package:local_music_player/viewModel/tracks-view-model.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future init() async {
-    await Provider.of<TrackViewModel>(context, listen: false).refresh();
+    await Provider.of<TrackViewModel>(context, listen: false).init();
     Navigator.of(context).pushReplacementNamed(homeRoute);
   }
 }

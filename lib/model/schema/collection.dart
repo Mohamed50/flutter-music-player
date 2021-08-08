@@ -24,10 +24,10 @@ class Collection{
 
   static Collection fromMap(Map<String, dynamic> collectionMap) {
     return new Collection(
-      tracks: tracksFromJson(collectionMap['tracks']),
-      albums: albumsFromJson(collectionMap['albums']),
-      artists: artistsFromJson(collectionMap['artists']),
-      playlists: playlistsFromJson(collectionMap['playlists']),
+      tracks: tracksFromJson(collectionMap['tracks'] ?? []),
+      albums: albumsFromJson(collectionMap['albums'] ?? []),
+      artists: artistsFromJson(collectionMap['artists'] ?? []),
+      playlists: playlistsFromJson(collectionMap['playlists'] ?? []),
     );
   }
 

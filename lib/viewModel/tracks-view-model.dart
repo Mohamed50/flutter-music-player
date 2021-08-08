@@ -4,10 +4,12 @@ import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:local_music_player/config/configuration.dart';
 import 'package:local_music_player/model/schema/album.dart';
 import 'package:local_music_player/model/schema/artist.dart';
+import 'package:local_music_player/model/schema/collection.dart';
 import 'package:local_music_player/model/schema/playlist.dart';
 import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/utils/utils.dart';
 import 'package:path/path.dart' as path;
+import 'package:permission_handler/permission_handler.dart';
 
 const List<String> SUPPORTED_FILE_TYPES = [
   'OGG',
@@ -33,7 +35,9 @@ class TrackViewModel with ChangeNotifier {
   List<Artist> _artists = <Artist>[];
 
   List<Album> get albums => _albums;
+
   List<Track> get tracks => _tracks;
+
   List<Artist> get artists => _artists;
 
   Album lastAlbum;
@@ -58,17 +62,34 @@ class TrackViewModel with ChangeNotifier {
     directories.add(Directory("/storage/emulated/0/Music"));
   }
 
-  Future<void> refresh() async {
-    Directory directory = directories.first;
-    for (FileSystemEntity object in directory.listSync(recursive: true)) {
-      if (isFileSupported(object) && object is File) {
-        print("file supported: ${object.path}");
-        collectionDirectoryContent.add(object);
-      }
+  init() async {
+    Collection collection = await fetchCollectionFromCache();
+    if(collection.tracks != null && collection.tracks.isNotEmpty){
+      _tracks = collection.tracks;
+      _albums = collection.albums;
+      _artists = collection.artists;
+      playlists = collection.playlists;
+      notifyListeners();
     }
-    _length = collectionDirectoryContent.length;
-    await fetchTracks();
-    notifyListeners();
+    else {
+      await refresh();
+    }
+  }
+
+  Future<void> refresh() async {
+    if (await Permission.storage.request().isGranted) {
+      Directory directory = directories.first;
+      for (FileSystemEntity object in directory.listSync(recursive: true)) {
+        if (isFileSupported(object) && object is File) {
+          print("file supported: ${object.path}");
+          collectionDirectoryContent.add(object);
+        }
+      }
+      _length = collectionDirectoryContent.length;
+      await fetchTracks();
+      saveCollectionToCache();
+      notifyListeners();
+    }
   }
 
   fetchTracks() async {
@@ -150,8 +171,19 @@ class TrackViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void cacheCollection(){
-
+  Future saveCollectionToCache() async {
+    await writeContentToFile(
+        configuration.collectionFile,
+        Collection(
+          tracks: tracks,
+          albums: albums,
+          artists: artists,
+          playlists: playlists,
+        ).toMap());
   }
 
+  Future<Collection> fetchCollectionFromCache() async {
+    Map mapCollection = await readContentFromFile(configuration.collectionFile);
+    return Collection.fromMap(mapCollection);
+  }
 }

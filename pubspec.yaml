@@ -28,6 +28,8 @@ dependencies:
   flutter_icons: ^1.1.0
   stretchy_header: ^2.0.0
   animations: ^2.0.1
+  permission_handler: ^8.1.4+2
+
 
 dev_dependencies:
   flutter_test:

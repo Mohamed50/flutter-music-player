@@ -6,7 +6,7 @@ import 'package:local_music_player/model/schema/track.dart';
 import 'media-type.dart';
 
 List<Album> albumsFromJson(List<dynamic> json) =>
-    List<Album>.from(json.map((x) => Album.fromMap(x)));
+    List<Album>.from(json.map((x) => Album.fromMap(x))) ?? [];
 
 List<dynamic> albumsToJson(List<Album> data) =>
     List<dynamic>.from(data.map((x) => x.toMap()));
@@ -51,11 +51,14 @@ class Album extends MediaType {
       'albumArtLow': this.albumArtHigh,
       'albumId': this.albumId,
       'type': this.type,
+      'dominateColor': this.dominateColor.value,
+      'secondaryColor': this.secondaryColor.value,
+      'accentColor': this.accentColor.value,
     };
   }
 
   static Album fromMap(Map<String, dynamic> albumMap) {
-    return new Album(
+    return new Album.fromCollection(
       albumName: albumMap['albumName'] ?? 'Unknown Album',
       year: albumMap['year'],
       albumArtistName: albumMap['albumArtistName'] ?? 'Unknown Artist',
@@ -64,10 +67,26 @@ class Album extends MediaType {
       albumArtLow: albumMap['albumArtLow'],
       albumId: albumMap['albumId'],
       tracks: tracksFromJson(albumMap["tracks"]),
+      dominateColor: Color(albumMap['dominateColor']),
+      secondaryColor: Color(albumMap['secondaryColor']),
+      accentColor: Color(albumMap['accentColor']),
     );
   }
 
   Album(
+      {
+      this.albumName,
+      this.year,
+      this.albumArtistName,
+      this.albumArtHigh,
+      this.albumArtMedium,
+      this.albumArtLow,
+      this.albumId,
+      this.dominateColor,
+      this.secondaryColor,
+      this.accentColor});
+
+  Album.fromCollection(
       {this.tracks,
       this.albumName,
       this.year,

@@ -6,7 +6,7 @@ import 'package:tinycolor/tinycolor.dart';
 import 'package:path/path.dart' as path;
 import 'media-type.dart';
 
-List<Track> tracksFromJson(List<dynamic> json) => List<Track>.from(json.map((x) => Track.fromMap(x)));
+List<Track> tracksFromJson(List<dynamic> json) => List<Track>.from(json.map((x) => Track.fromCollectionMap(x))) ?? [];
 
 List<dynamic> tracksToJson(List<Track> data) => List<dynamic>.from(data.map((x) => x.toMap()));
 
@@ -54,6 +54,9 @@ class Track extends MediaType {
       'trackId': this.trackId,
       'albumId': this.albumId,
       'type': this.type,
+      'dominateColor': this.dominateColor.value,
+      'secondaryColor': this.secondaryColor.value,
+      'accentColor': this.accentColor.value,
     };
   }
 
@@ -78,7 +81,30 @@ class Track extends MediaType {
     return track;
   }
 
-  Track({this.trackName, this.albumName, this.trackNumber, this.year, this.albumArtistName, this.trackArtistNames, this.filePath, this.albumArtHigh, this.albumArtMedium, this.albumArtLow, this.trackDuration, this.trackId, this.albumId});
+  static Track fromCollectionMap(Map<String, dynamic> trackMap) {
+    if (trackMap == null) return null;
+    Track track = new Track(
+      trackName: trackMap['trackName'] ?? 'Unknown Track',
+      albumName: trackMap['albumName'] ?? 'Unknown Album',
+      trackNumber: trackMap['trackNumber'],
+      year: trackMap['year'],
+      albumArtistName: trackMap['albumArtistName'] ?? 'Unknown Artist',
+      trackArtistNames: ((trackMap['trackArtistNames'] ?? <String>['Unknown Artist']) as List).cast<String>(),
+      filePath: trackMap['filePath'],
+      albumArtHigh: trackMap['albumArtHigh'],
+      albumArtMedium: trackMap['albumArtMedium'],
+      albumArtLow: trackMap['albumArtLow'],
+      trackDuration: trackMap['trackDuration'],
+      trackId: trackMap['trackId'],
+      albumId: trackMap['albumId'],
+      dominateColor: Color(trackMap['dominateColor']),
+      secondaryColor: Color(trackMap['secondaryColor']),
+      accentColor: Color(trackMap['accentColor']),
+    );
+    return track;
+  }
+
+  Track({this.trackName, this.albumName, this.trackNumber, this.year, this.albumArtistName, this.trackArtistNames, this.filePath, this.albumArtHigh, this.albumArtMedium, this.albumArtLow, this.trackDuration, this.trackId, this.albumId, this.dominateColor, this.secondaryColor, this.accentColor});
 
 
   Future fetchDominateColor() async{

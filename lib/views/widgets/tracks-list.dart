@@ -34,6 +34,7 @@ class TracksListWidget extends StatelessWidget {
               IconButton(
                 icon: Icon(Entypo.shuffle),
                 iconSize: 20.0,
+                color: textColor,
                 onPressed: (){
                   List<Track> newPlaylist  = [];
                   newPlaylist.add(tracks.first);

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:local_music_player/model/schema/album.dart';
 import 'package:local_music_player/model/schema/artist.dart';
@@ -40,5 +41,13 @@ int binaryIndexOf(List<dynamic> collectionList, List<dynamic> keywordList) {
   return indexOfKeywordList;
 }
 
-bool binaryContains(List<dynamic> collectionList, List<dynamic> keywordList) =>
-    binaryIndexOf(collectionList, keywordList) != -1 ? true : false;
+bool binaryContains(List<dynamic> collectionList, List<dynamic> keywordList) => binaryIndexOf(collectionList, keywordList) != -1 ? true : false;
+
+
+Future<void> writeContentToFile(File file, Map content) async {
+  await file.writeAsString(json.encode(content));
+}
+
+Future<dynamic> readContentFromFile(File file) async {
+  return json.decode(await file.readAsString());
+}

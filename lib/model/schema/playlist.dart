@@ -1,7 +1,7 @@
 import 'media-type.dart';
 import 'track.dart';
 
-List<Playlist> playlistsFromJson(List<dynamic> json) => List<Playlist>.from(json.map((x) => Playlist.fromMap(x)));
+List<Playlist> playlistsFromJson(List<dynamic> json) => List<Playlist>.from(json.map((x) => Playlist.fromMap(x))) ?? [];
 
 List<dynamic> playlistsToJson(List<Playlist> data) => List<dynamic>.from(data.map((x) => x.toMap()));
 
