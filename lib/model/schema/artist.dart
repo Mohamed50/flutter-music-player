@@ -1,18 +1,34 @@
 import 'package:local_music_player/model/schema/track.dart';
-
 import 'album.dart';
+import 'media-type.dart';
 
-class Artist{
+List<Artist> artistsFromJson(List<dynamic> json) => List<Artist>.from(json.map((x) => Artist.fromMap(x)));
 
-  final String name;
-  final List<Album> albums;
-  final List<Track> tracks = [];
+List<dynamic> artistsToJson(List<Artist> data) => List<dynamic>.from(data.map((x) => x.toMap()));
 
-  Artist({this.name, this.albums : const []}){
-   albums.forEach((element) => tracks.addAll(element.tracks));
+class Artist extends MediaType {
+  String artistName;
+  List<Album> albums = <Album>[];
+  List<Track> tracks = <Track>[];
+  String type = 'Artist';
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'trackArtistNames': this.artistName,
+      'albums': albumsToJson(albums),
+      'tracks': tracksToJson(tracks),
+      'type': this.type,
+    };
   }
 
+  static Artist fromMap(Map<String, dynamic> artistMap) {
+    return new Artist(
+      artistName: artistMap['artistName'],
+      albums: albumsFromJson(artistMap["albums"]),
+      tracks: tracksFromJson(artistMap["tracks"])
+    );
+  }
 
-
-
+  Artist({this.artistName, this.tracks, this.albums});
 }

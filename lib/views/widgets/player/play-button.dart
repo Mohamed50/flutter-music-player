@@ -1,7 +1,11 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:local_music_player/presenter/player-presenter.dart';
+import 'package:local_music_player/viewModel/audio-view-model.dart';
+import 'package:provider/provider.dart';
 
-class PlayButton extends StatefulWidget {
+class PlayButton extends StatelessWidget {
   final Color primaryColor;
   final Color secondaryColor;
 
@@ -9,40 +13,19 @@ class PlayButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PlayButtonState createState() => _PlayButtonState();
-}
-
-class _PlayButtonState extends State<PlayButton>
-    with TickerProviderStateMixin {
-  AnimationController animationController;
-
-  @override
-  void initState() {
-    animationController = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.play_pause, progress: Tween(begin: 0.0, end: 1.0).animate(animationController),
+    return Selector<PlayerViewModel,bool>(
+      selector: (_, provider) => provider.state == PlayerState.PLAYING,
+      builder: (context, value, child) => IconToggle(
+        value: value,
+        selectedIconData: FontAwesome.pause,
+        unselectedIconData: FontAwesome.play,
+        activeColor: primaryColor,
+        inactiveColor: primaryColor,
+        onChanged: (value) {
+          PlayerPresenter.getInstance(context).handlePLayButton();
+        },
       ),
-      iconSize: 70.0,
-      color: widget.primaryColor,
-      onPressed: () {
-        PlayerPresenter.getInstance(context).handlePLayButton();
-        if(animationController.status == AnimationStatus.forward || animationController.status == AnimationStatus.completed)
-          animationController.reverse();
-        else
-          animationController.forward();
-      },
     );
   }
 }

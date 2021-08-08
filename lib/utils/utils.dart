@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'package:local_music_player/model/schema/album.dart';
+import 'package:local_music_player/model/schema/artist.dart';
 import 'package:local_music_player/model/schema/media-type.dart';
-import 'package:local_music_player/viewModel/collection.dart';
+import 'package:local_music_player/model/schema/playlist.dart';
+import 'package:local_music_player/model/schema/track.dart';
+import 'package:local_music_player/viewModel/tracks-view-model.dart';
 
 bool isFileSupported(FileSystemEntity file) {
   if (file is File &&

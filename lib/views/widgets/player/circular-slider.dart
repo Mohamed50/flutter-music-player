@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_music_player/presenter/player-presenter.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
 import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -38,6 +39,9 @@ class CircularSlider extends StatelessWidget {
               shadowStep: 2),
         ),
         innerWidget: (double value) => child,
+        onChange: (value) {
+          // PlayerPresenter.getInstance(context).seek(value);
+        },
       ),
       child: child,
     );

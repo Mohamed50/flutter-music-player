@@ -1,10 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
-import 'package:local_music_player/model/schema/media-type.dart';
+import 'package:local_music_player/model/schema/track.dart';
 
 class PlayerViewModel with ChangeNotifier{
   AudioPlayer _audioPlayer;
-  static const int playerId = 153554645;
+  static const int playerId = 1;
 
 
   PlayerState _state = PlayerState.COMPLETED;
@@ -19,6 +19,9 @@ class PlayerViewModel with ChangeNotifier{
   Track _track;
   Track get track => _track;
 
+  List<Track> _playlist;
+  List<Track> get playlist => _playlist;
+
   PlayerViewModel(){
     init();
     listenToPlayerState();
@@ -28,7 +31,7 @@ class PlayerViewModel with ChangeNotifier{
 
   init(){
     _audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER, playerId: playerId.toString());
-    _audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+    _audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
   }
 
   listenToDuration(){
@@ -48,13 +51,47 @@ class PlayerViewModel with ChangeNotifier{
   listenToPlayerState(){
     _audioPlayer.onPlayerStateChanged.listen((event) {
       _state = event;
+      handleSongCompleted();
       print(event);
       notifyListeners();
     });
   }
 
+  void handleSongCompleted(){
+    if(_state == PlayerState.COMPLETED){
+      playNextTrack();
+    }
+  }
+
+  playNextTrack(){
+    if(playlist.isNotEmpty){
+      int index = playlist.indexOf(track);
+      if(index < playlist.length - 1)
+        playTrack(playlist[++index]);
+      else
+        playTrack(playlist.first);
+    }
+  }
+
+  playPrevTrack(){
+    if(playlist.isNotEmpty){
+      int index = playlist.indexOf(track);
+      if(index > playlist.length - 0)
+        playTrack(playlist[--index]);
+      else
+        playTrack(playlist.last);
+    }
+  }
+
   playTrack(Track track){
     _track = track;
+    notifyListeners();
+    play();
+  }
+
+  playPlaylist(List<Track> newPlaylist){
+    _playlist = newPlaylist;
+    _track = _playlist.first;
     notifyListeners();
     play();
   }

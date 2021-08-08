@@ -2,11 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:local_music_player/config/configuration.dart';
-import 'package:local_music_player/model/schema/media-type.dart';
+import 'package:local_music_player/model/schema/album.dart';
+import 'package:local_music_player/model/schema/artist.dart';
+import 'package:local_music_player/model/schema/playlist.dart';
+import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/utils/utils.dart';
 import 'package:path/path.dart' as path;
 
-List<String> supportedAudioExtensions = [
+const List<String> SUPPORTED_FILE_TYPES = [
   'OGG',
   'OGA',
   'OGX',
@@ -30,10 +33,9 @@ class TrackViewModel with ChangeNotifier {
   List<Artist> _artists = <Artist>[];
 
   List<Album> get albums => _albums;
-
   List<Track> get tracks => _tracks;
-
   List<Artist> get artists => _artists;
+
   Album lastAlbum;
   Track lastTrack;
   Artist lastArtist;
@@ -53,7 +55,7 @@ class TrackViewModel with ChangeNotifier {
   List<File> collectionDirectoryContent = <File>[];
 
   TrackViewModel() {
-    directories.add(Directory("/storage/emulated/0/"));
+    directories.add(Directory("/storage/emulated/0/Music"));
   }
 
   Future<void> refresh() async {
@@ -81,7 +83,7 @@ class TrackViewModel with ChangeNotifier {
   addTrack(File file) async {
     MetadataRetriever retriever = new MetadataRetriever();
     await retriever.setFile(file);
-    Track track = Track.fromMap((await retriever.metadata).toMap());
+    Track track = await Track.fromMap((await retriever.metadata).toMap());
     track.filePath = file.path;
     if (track.trackName == 'Unknown Track') {
       track.trackName = path.basename(file.path).split('.').first;
@@ -147,4 +149,9 @@ class TrackViewModel with ChangeNotifier {
     ++_progress;
     notifyListeners();
   }
+
+  void cacheCollection(){
+
+  }
+
 }
