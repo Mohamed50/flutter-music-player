@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 
 class CardContainer extends StatelessWidget {
+  final double width;
+  final double height;
   final Color color;
   final BorderRadius borderRadius;
   final BoxShape shape;
@@ -12,14 +14,18 @@ class CardContainer extends StatelessWidget {
   final EdgeInsets margin;
   final double elevation;
   final double blur;
+  final Alignment alignment;
 
-  const CardContainer({Key key, this.color, this.borderRadius, this.child, this.shape, this.padding, this.margin, this.elevation : 4, this.blur : 4,}) : super(key: key);
+  const CardContainer({Key key, this.color, this.borderRadius, this.child, this.shape, this.padding, this.margin, this.elevation : 4, this.blur : 4, this.width, this.height, this.alignment,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Selector<SettingViewModel, bool>(
       selector: (_, provider) => provider.isDark(),
       builder: (context, isDark, child) => Container(
+        width: width,
+        height: height,
+        alignment: alignment,
         padding: padding ?? EdgeInsets.all(0.0),
         margin: margin ?? EdgeInsets.all(0.0),
         // constraints: BoxConstraints.expand(),

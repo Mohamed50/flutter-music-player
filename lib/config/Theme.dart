@@ -4,18 +4,18 @@ String primaryFontFamily = "fira";
 
 Color primaryColor = Colors.deepPurple;
 Color accentColor = Colors.deepPurpleAccent;
-Color lightScaffoldBackgroundColor = Colors.black;
+Color lightScaffoldBackgroundColor = Color(0xFF1A1A1A);
 Color lightBackgroundColor = Color(0xFF1A1A1A);
 Color lightCardColor = Colors.grey[100];
 Color lightIndicatorColor = Color(0xFF414042);
-Color lightTextColor = Colors.grey[900];
+Color lightTextColor = Colors.white;
 
 Color darkScaffoldBackgroundColor = Colors.black;
 Color darkBackgroundColor = Color(0xFF1A1A1A);
 Color darkCardColor = Color(0xFF141414);
 Color darkIndicatorColor = Color(0xFFFFE6B4);
 Color darkTextColor =  Colors.white;
-Color darkTitleTextColor =  Colors.grey[300];
+Color darkTitleTextColor =  Colors.grey[100];
 
 
 ThemeData lightTheme = ThemeData(
@@ -145,4 +145,18 @@ Color getDarkColor(int index){
 Color getLightColor(int index){
   index = index % lightList.length;
   return lightList[index];
+}
+
+
+getTextThemeWithColor(Color textColor){
+  return TextTheme(
+      headline6: TextStyle(color: textColor),
+      headline5: TextStyle(color: textColor),
+      headline4: TextStyle(color: textColor),
+      headline3: TextStyle(color: textColor),
+      headline2: TextStyle(color: textColor),
+      headline1: TextStyle(color: textColor),
+      bodyText1: TextStyle(color: textColor),
+      bodyText2: TextStyle(color: textColor)
+  );
 }

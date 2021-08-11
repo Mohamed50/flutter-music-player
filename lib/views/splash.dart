@@ -45,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future init() async {
     await Provider.of<TrackViewModel>(context, listen: false).init();
-    Navigator.of(context).pushReplacementNamed(homeRoute);
+    Navigator.of(context).pushReplacementNamed(menuRoute);
   }
 }
 

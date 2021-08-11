@@ -34,7 +34,7 @@ class TracksListWidget extends StatelessWidget {
               IconButton(
                 icon: Icon(Entypo.shuffle),
                 iconSize: 20.0,
-                color: textColor,
+                color: textColor ?? Theme.of(context).textTheme.headline4.color,
                 onPressed: (){
                   List<Track> newPlaylist  = [];
                   newPlaylist.add(tracks.first);
@@ -52,7 +52,7 @@ class TracksListWidget extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) => ListTile(
             onTap: () {
-              PlayerPresenter.getInstance(context).setTrack(tracks[index]);
+              PlayerPresenter.getInstance(context).playPlaylist(tracks, index);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PlayerPage(),
@@ -61,11 +61,11 @@ class TracksListWidget extends StatelessWidget {
             },
             title: Text(
               tracks[index].trackName,
-              style: TextStyle(color: textColor),
+              style: TextStyle(color: textColor ?? Theme.of(context).textTheme.headline4.color),
             ),
             subtitle:  Text(
               tracks[index].albumArtistName,
-              style: TextStyle(color: textColor?.withOpacity(0.7)),
+              style: TextStyle(color: textColor != null? textColor.withOpacity(0.7) : Theme.of(context).textTheme.headline4.color.withOpacity(0.7)),
             ),
             leading: CardContainer(
               borderRadius: BorderRadius.circular(4.0),

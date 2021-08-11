@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app.dart';
 import 'config/configuration.dart';
-import 'viewModel/collection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

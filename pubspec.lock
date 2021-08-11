@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  expandable_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: expandable_bottom_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   fake_async:
     dependency: transitive
     description:
@@ -142,6 +149,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  implicitly_animated_reorderable_list:
+    dependency: "direct main"
+    description:
+      name: implicitly_animated_reorderable_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   js:
     dependency: transitive
     description:

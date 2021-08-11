@@ -4,26 +4,38 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget{
   final Color backgroundColor;
   final Color titleColor;
   final String title;
-  const CustomAppbar({Key key, this.title, this.backgroundColor, this.titleColor}) : super(key: key);
+  final bool withBackButton;
+  final PreferredSizeWidget bottom;
+  const CustomAppbar({Key key, this.title, this.backgroundColor, this.titleColor, this.withBackButton : false, this.bottom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: backgroundColor,
-      foregroundColor: Colors.blue,
       centerTitle: true,
-      leading: Icon(Icons.keyboard_arrow_down, color: titleColor,),
+      leading: withBackButton ? BackButton() : Container(),
       title: Text(
         title,
-        style: TextStyle(
-            color: titleColor
-        ),
       ),
+      bottom: bottom,
     );
   }
 
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(60.0);
+
+
 }
+
+
+class BackButton extends StatelessWidget {
+  const BackButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.keyboard_arrow_down));
+  }
+}
+

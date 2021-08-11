@@ -15,7 +15,7 @@ class Artist extends MediaType {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'trackArtistNames': this.artistName,
+      'artistName': this.artistName,
       'albums': albumsToJson(albums),
       'tracks': tracksToJson(tracks),
       'type': this.type,

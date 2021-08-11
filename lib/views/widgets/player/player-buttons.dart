@@ -5,32 +5,78 @@ import 'package:local_music_player/presenter/player-presenter.dart';
 import 'play-button.dart';
 
 class PlayerButtons extends StatelessWidget {
-  final bool isMini;
-  final Color primaryColor;
-  final Color secondaryColor;
-
-  const PlayerButtons({Key key, this.primaryColor, this.secondaryColor, this.isMini : false})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          icon: Icon(Entypo.controller_fast_backward),
-          iconSize: isMini ? 16.0 : 56.0,
-          color: secondaryColor,
-          onPressed: PlayerPresenter.getInstance(context).next,
+        Hero(
+          tag: ValueKey("prev button"),
+          child: Material(
+            color: Colors.transparent,
+            child: IconButton(
+              icon: Icon(Entypo.controller_fast_backward),
+              iconSize: 32.0,
+              color: Theme.of(context).textTheme.headline4.color,
+              onPressed: PlayerPresenter.getInstance(context).prev,
+            ),
+          ),
         ),
-        PlayButton(
-          primaryColor: primaryColor,
+        SizedBox(width: 24.0),
+        Hero(
+          tag: ValueKey("play button"),
+          child: Material(
+            color: Colors.transparent,
+            child: PlayButton(),
+          ),
         ),
-        IconButton(
-          icon: Icon(Entypo.controller_fast_forward),
-          iconSize: isMini ? 16.0 : 56.0,
-          color: secondaryColor,
-          onPressed: PlayerPresenter.getInstance(context).prev,
+        SizedBox(width: 24.0),
+        Hero(
+          tag: ValueKey("next button"),
+          child: Material(
+            color: Colors.transparent,
+            child: IconButton(
+              icon: Icon(Entypo.controller_fast_forward),
+              iconSize: 32.0,
+              color: Theme.of(context).textTheme.headline4.color,
+              onPressed: PlayerPresenter.getInstance(context).next,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MiniPlayerButtons extends StatelessWidget {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Hero(
+          tag: ValueKey("play button"),
+          child: Material(
+            color: Colors.transparent,
+            child: PlayButton(
+              isMini: true,
+            ),
+          ),
+        ),
+        Hero(
+          tag: ValueKey("next button"),
+          child: Material(
+            color: Colors.transparent,
+            child: IconButton(
+              icon: Icon(Entypo.controller_fast_forward),
+              iconSize: 16.0,
+              color: Theme.of(context).textTheme.headline4.color,
+              onPressed: PlayerPresenter.getInstance(context).next,
+            ),
+          ),
         ),
       ],
     );

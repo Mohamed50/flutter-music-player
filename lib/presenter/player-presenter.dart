@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
+import 'package:local_music_player/views/widgets/player/queue-bottom-sheet.dart';
 import 'package:provider/provider.dart';
 
 class PlayerPresenter{
@@ -22,14 +23,15 @@ class PlayerPresenter{
     return _mInstance;
   }
 
-
-
-  void setTrack(Track track){
-    _playerViewModel.setTrack(track);
+  void playTrack(Track track){
+    _playerViewModel.playTrack(track);
   }
 
-  void playPlaylist(List<Track> newPlaylist){
-    _playerViewModel.playPlaylist(newPlaylist);
+  void playPlaylist(List<Track> newPlaylist, [int index]){
+    if(index == null)
+      _playerViewModel.shufflePlaylist(newPlaylist);
+    else
+      _playerViewModel.playPlaylist(newPlaylist, index);
   }
 
   void next(){
@@ -43,6 +45,15 @@ class PlayerPresenter{
 
   handlePLayButton(){
     _playerViewModel.handlePlayButton();
+  }
+
+  showPlaylist(){
+    showBottomSheet(context: _context, builder: (context) => QueueBottomSheet(),);
+  }
+
+
+  reorderPlaylist(List<Track> playlist){
+    _playerViewModel.changePlaylist(playlist);
   }
 
 }

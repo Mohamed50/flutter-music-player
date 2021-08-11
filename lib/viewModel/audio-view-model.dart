@@ -22,7 +22,10 @@ class PlayerViewModel with ChangeNotifier{
   List<Track> _playlist;
   List<Track> get playlist => _playlist;
 
-  PlayerViewModel(){
+  ValueChanged<Track> onTrackChanged;
+
+  PlayerViewModel(ValueChanged<Track> onTrackChanged){
+    this.onTrackChanged = onTrackChanged;
     init();
     listenToPlayerState();
     listenToDuration();
@@ -76,7 +79,7 @@ class PlayerViewModel with ChangeNotifier{
   playPrevTrack(){
     if(playlist.isNotEmpty){
       int index = playlist.indexOf(track);
-      if(index > playlist.length - 0)
+      if(index > 0)
         playTrack(playlist[--index]);
       else
         playTrack(playlist.last);
@@ -87,13 +90,18 @@ class PlayerViewModel with ChangeNotifier{
     _track = track;
     notifyListeners();
     play();
+    onTrackChanged(track);
   }
 
-  playPlaylist(List<Track> newPlaylist){
+  shufflePlaylist(List<Track> newPlaylist){
     _playlist = newPlaylist;
-    _track = _playlist.first;
-    notifyListeners();
-    play();
+    playlist.shuffle();
+    playTrack(_playlist.first);
+  }
+
+  playPlaylist(List<Track> newPlaylist, int index){
+    _playlist = newPlaylist;
+    playTrack(_playlist[index]);
   }
 
   play(){
@@ -132,15 +140,6 @@ class PlayerViewModel with ChangeNotifier{
     return _state == PlayerState.PLAYING && _track.filePath == track.filePath;
   }
 
-  // void handlePlayButton(Track track) {
-  //   if(_state == PlayerState.COMPLETED || _state == PlayerState.STOPPED || _track.path != _track.path)
-  //     playTrack(track);
-  //   else if(_state == PlayerState.PAUSED)
-  //     resume();
-  //   else
-  //     pause();
-  // }
-
   void handlePlayButton() {
     if(_state == PlayerState.COMPLETED || _state == PlayerState.STOPPED)
       play();
@@ -153,6 +152,11 @@ class PlayerViewModel with ChangeNotifier{
   void setTrack(Track track) {
     _track = track;
     _audioPlayer.setUrl(_track.filePath);
+    notifyListeners();
+  }
+
+  void changePlaylist(List<Track> playlist) {
+    _playlist = playlist;
     notifyListeners();
   }
 

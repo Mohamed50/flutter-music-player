@@ -29,6 +29,8 @@ dependencies:
   stretchy_header: ^2.0.0
   animations: ^2.0.1
   permission_handler: ^8.1.4+2
+  expandable_bottom_bar: ^2.0.2
+  implicitly_animated_reorderable_list: ^0.4.0
 
 
 dev_dependencies:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_music_player/presenter/setting-presenter.dart';
 import 'package:local_music_player/viewModel/setting-view-model.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +10,15 @@ class SettingHandler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingViewModel>(
-      builder: (BuildContext context, SettingViewModel setting, Widget child) {
-        return builder(context, setting);
-      },
+    return ChangeNotifierProvider(
+      create: (_) => SettingViewModel(),
+      lazy: false,
+      child: Consumer<SettingViewModel>(
+        builder: (BuildContext context, SettingViewModel setting, Widget child) {
+          SettingPresenter.getInstance().init(context);
+          return builder(context, setting);
+        },
+      ),
     );
   }
 }

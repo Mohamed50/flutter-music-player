@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:local_music_player/config/configuration.dart';
+import 'package:local_music_player/utils/utils.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:tinycolor/tinycolor.dart';
 import 'package:path/path.dart' as path;
 import 'media-type.dart';
 
@@ -128,7 +128,7 @@ class Track extends MediaType {
   }
 
   void fetchAccentColor(){
-    accentColor = TinyColor(dominateColor).isDark()
+    accentColor = isDarkColor(dominateColor)
         ? Colors.white
         : Colors.grey[900];
   }
