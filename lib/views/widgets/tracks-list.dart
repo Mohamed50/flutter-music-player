@@ -54,6 +54,22 @@ class TracksListWidget extends StatelessWidget {
                 ),
               );
             },
+            leading: CardContainer(
+              borderRadius: BorderRadius.circular(4.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.0),
+                child: Hero(
+                  tag: tracks[index].filePath,
+                  child: Image.file(
+                    tracks[index].albumArt,
+                    key: ValueKey(index),
+                    fit: BoxFit.cover,
+                    colorBlendMode: BlendMode.overlay,
+                    color: Colors.black12,
+                  ),
+                ),
+              ),
+            ),
             title: Text(
               tracks[index].trackName,
               style: TextStyle(
@@ -71,21 +87,9 @@ class TracksListWidget extends StatelessWidget {
                           .color
                           .withOpacity(0.7)),
             ),
-            leading: CardContainer(
-              borderRadius: BorderRadius.circular(4.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4.0),
-                child: Hero(
-                  tag: tracks[index].filePath,
-                  child: Image.file(
-                    tracks[index].albumArt,
-                    key: ValueKey(index),
-                    fit: BoxFit.cover,
-                    colorBlendMode: BlendMode.overlay,
-                    color: Colors.black12,
-                  ),
-                ),
-              ),
+            trailing: IconButton(
+              onPressed: () => PlayerPresenter.getInstance(context).showTrackOptionBottomSheet(tracks[index]),
+              icon: Icon(Icons.more_vert),
             ),
           ),
         )

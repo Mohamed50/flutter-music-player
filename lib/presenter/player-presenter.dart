@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
-import 'package:local_music_player/views/widgets/player/queue-bottom-sheet.dart';
+import 'package:local_music_player/views/widgets/player/track-option-bottom-sheet.dart';
 import 'package:provider/provider.dart';
 
 class PlayerPresenter{
@@ -43,25 +43,32 @@ class PlayerPresenter{
   }
 
 
-  handlePLayButton(){
+  void handlePLayButton(){
     _playerViewModel.handlePlayButton();
   }
 
-  handleRepeatMode(){
+  void handleRepeatMode(){
     _playerViewModel.handleRepeatMode();
   }
 
-  showPlaylist(){
-    showBottomSheet(context: _context, builder: (context) => QueueBottomSheet(),);
-  }
-
-
-  reorderPlaylist(List<Track> playlist){
+  void reorderPlaylist(List<Track> playlist){
     _playerViewModel.changePlaylist(playlist);
   }
 
   void seek(double value) {
     _playerViewModel.seek(value.toInt());
+  }
+
+  void showTrackOptionBottomSheet(Track track) {
+    showModalBottomSheet(context: _context, builder: (context) => TrackOptionBottomSheet(track: track,));
+  }
+
+  void addToQueue(Track track){
+    _playerViewModel.addToQueue(track);
+  }
+
+  void playNext(Track track){
+    _playerViewModel.playNext(track);
   }
 
 }

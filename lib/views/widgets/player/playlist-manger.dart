@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:local_music_player/presenter/player-presenter.dart';
+import 'package:local_music_player/viewModel/audio-view-model.dart';
+import 'package:provider/provider.dart';
 
 class PlaylistManager extends StatelessWidget {
   final Color primaryColor;
@@ -21,27 +23,26 @@ class PlaylistManager extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconToggle(
-            value: false,
-            selectedIconData: Icons.shuffle_rounded,
-            unselectedIconData: Icons.repeat_rounded,
-            activeColor: Theme.of(context).textTheme.headline4.color,
-            inactiveColor: Theme.of(context).textTheme.headline4.color,
-            onChanged: (value) {
-            },
+          Selector<PlayerViewModel, bool>(
+            selector: (_, provider) => provider.repeatMode == RepeatMode.Repeat,
+            builder: (context, value, child) => IconToggle(
+              value: value,
+              selectedIconData: Icons.repeat_rounded,
+              unselectedIconData: Icons.repeat_one_rounded,
+              activeColor: Theme.of(context).backgroundColor,
+              inactiveColor: Theme.of(context).backgroundColor,
+              onChanged: (value) => PlayerPresenter.getInstance(context).handleRepeatMode(),
+            ),
           ),
-          IconButton(
-            icon: Icon(Icons.playlist_play_rounded),
-            iconSize: 32.0,
-            color: Theme.of(context).textTheme.headline4.color,
-            onPressed: () => PlayerPresenter.getInstance(context).showPlaylist(),
+          Spacer(
+            flex: 2,
           ),
           IconToggle(
             value: true,
             selectedIconData: Icons.favorite_rounded,
             unselectedIconData: Icons.favorite_border_rounded,
-            activeColor: Theme.of(context).textTheme.headline4.color,
-            inactiveColor: Theme.of(context).textTheme.headline4.color,
+            activeColor: Theme.of(context).backgroundColor,
+            inactiveColor: Theme.of(context).backgroundColor,
             onChanged: (value) {},
           ),
         ],
