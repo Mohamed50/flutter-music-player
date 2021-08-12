@@ -9,7 +9,8 @@ class TracksListWidget extends StatelessWidget {
   final List<Track> tracks;
   final Color textColor;
 
-  const TracksListWidget({Key key, this.tracks, this.textColor}) : super(key: key);
+  const TracksListWidget({Key key, this.tracks, this.textColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +36,7 @@ class TracksListWidget extends StatelessWidget {
                 icon: Icon(Entypo.shuffle),
                 iconSize: 20.0,
                 color: textColor ?? Theme.of(context).textTheme.headline4.color,
-                onPressed: (){
-                  List<Track> newPlaylist  = [];
-                  newPlaylist.add(tracks.first);
-                  newPlaylist.add(tracks[tracks.length ~/ 2]);
-                  newPlaylist.add(tracks.last);
-                  PlayerPresenter.getInstance(context).playPlaylist(newPlaylist);
-                },
+                onPressed: () => PlayerPresenter.getInstance(context).playPlaylist(tracks),
               ),
             ],
           ),
@@ -61,11 +56,20 @@ class TracksListWidget extends StatelessWidget {
             },
             title: Text(
               tracks[index].trackName,
-              style: TextStyle(color: textColor ?? Theme.of(context).textTheme.headline4.color),
+              style: TextStyle(
+                  color:
+                      textColor ?? Theme.of(context).textTheme.headline4.color),
             ),
-            subtitle:  Text(
+            subtitle: Text(
               tracks[index].albumArtistName,
-              style: TextStyle(color: textColor != null? textColor.withOpacity(0.7) : Theme.of(context).textTheme.headline4.color.withOpacity(0.7)),
+              style: TextStyle(
+                  color: textColor != null
+                      ? textColor.withOpacity(0.7)
+                      : Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .color
+                          .withOpacity(0.7)),
             ),
             leading: CardContainer(
               borderRadius: BorderRadius.circular(4.0),
