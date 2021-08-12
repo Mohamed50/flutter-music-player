@@ -47,6 +47,10 @@ class PlayerPresenter{
     _playerViewModel.handlePlayButton();
   }
 
+  handleRepeatMode(){
+    _playerViewModel.handleRepeatMode();
+  }
+
   showPlaylist(){
     showBottomSheet(context: _context, builder: (context) => QueueBottomSheet(),);
   }
@@ -54,6 +58,10 @@ class PlayerPresenter{
 
   reorderPlaylist(List<Track> playlist){
     _playerViewModel.changePlaylist(playlist);
+  }
+
+  void seek(double value) {
+    _playerViewModel.seek(value.toInt());
   }
 
 }

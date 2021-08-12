@@ -55,7 +55,6 @@ class PlayerPage extends StatelessWidget {
                 TrackInfo(
                   title: track.trackName,
                   artistName: track.albumArtistName,
-                  textColor: track.accentColor,
                 ),
                 SizedBox(height: 16.0),
                 PlayerButtons(),

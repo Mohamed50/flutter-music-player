@@ -2,6 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:local_music_player/model/schema/track.dart';
 
+enum RepeatMode {RepeatOne, Repeat}
+
 class PlayerViewModel with ChangeNotifier{
   AudioPlayer _audioPlayer;
   static const int playerId = 1;
@@ -9,6 +11,9 @@ class PlayerViewModel with ChangeNotifier{
 
   PlayerState _state = PlayerState.COMPLETED;
   PlayerState get state => _state;
+
+  RepeatMode _repeatMode = RepeatMode.Repeat;
+  RepeatMode get repeatMode => _repeatMode;
 
   Duration _position = Duration(seconds: 0);
   Duration get position => _position;
@@ -62,7 +67,10 @@ class PlayerViewModel with ChangeNotifier{
 
   void handleSongCompleted(){
     if(_state == PlayerState.COMPLETED){
-      playNextTrack();
+      if(repeatMode == RepeatMode.Repeat)
+        playNextTrack();
+      else
+        repeat();
     }
   }
 
@@ -124,6 +132,11 @@ class PlayerViewModel with ChangeNotifier{
     _audioPlayer.stop();
   }
 
+  repeat(){
+    seek(0);
+    play();
+  }
+
   seek(int toSecond){
     _audioPlayer.seek(Duration(seconds: toSecond));
   }
@@ -147,6 +160,14 @@ class PlayerViewModel with ChangeNotifier{
       resume();
     else
       pause();
+  }
+
+  void handleRepeatMode() {
+    if(_repeatMode == RepeatMode.Repeat)
+      _repeatMode = RepeatMode.RepeatOne;
+    else
+      _repeatMode = RepeatMode.Repeat;
+    notifyListeners();
   }
 
   void setTrack(Track track) {
