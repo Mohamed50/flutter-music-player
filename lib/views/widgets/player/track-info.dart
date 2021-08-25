@@ -9,9 +9,9 @@ class TrackInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(title, style: Theme.of(context).textTheme.headline5, textAlign: TextAlign.center,),
+        FittedBox(child: Text(title, style: Theme.of(context).textTheme.headline5, textAlign: TextAlign.center,maxLines: 1,)),
         SizedBox(height: 8.0),
-        Text(artistName, style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center,),
+        FittedBox(child: Text(artistName, style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center,)),
       ],
     );
   }

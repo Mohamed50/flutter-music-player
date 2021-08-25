@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:local_music_player/model/schema/track.dart';
@@ -36,7 +38,8 @@ class TracksListWidget extends StatelessWidget {
                 icon: Icon(Entypo.shuffle),
                 iconSize: 20.0,
                 color: textColor ?? Theme.of(context).textTheme.headline4.color,
-                onPressed: () => PlayerPresenter.getInstance(context).playPlaylist(tracks),
+                onPressed: () =>
+                    PlayerPresenter.getInstance(context).playPlaylist(tracks),
               ),
             ],
           ),
@@ -60,13 +63,15 @@ class TracksListWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.0),
                 child: Hero(
                   tag: tracks[index].filePath,
-                  child: Image.file(
-                    tracks[index].albumArt,
-                    key: ValueKey(index),
-                    fit: BoxFit.cover,
-                    colorBlendMode: BlendMode.overlay,
-                    color: Colors.black12,
-                  ),
+                  child: tracks[index].albumArt != null
+                      ? Image.file(
+                          tracks[index].albumArt ?? tracks[index].filePath.split("/").removeLast() + "Cover.jpg" ,
+                          key: ValueKey(index),
+                          fit: BoxFit.cover,
+                          colorBlendMode: BlendMode.overlay,
+                          color: Colors.black12,
+                        )
+                      : Image.asset("assets/images/collection-album.jpg"),
                 ),
               ),
             ),
@@ -88,7 +93,9 @@ class TracksListWidget extends StatelessWidget {
                           .withOpacity(0.7)),
             ),
             trailing: IconButton(
-              onPressed: () => PlayerPresenter.getInstance(context).showTrackOptionBottomSheet(tracks[index]),
+              color: Theme.of(context).textTheme.headline4.color,
+              onPressed: () => PlayerPresenter.getInstance(context)
+                  .showTrackOptionBottomSheet(tracks[index]),
               icon: Icon(Icons.more_vert),
             ),
           ),

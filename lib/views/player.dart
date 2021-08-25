@@ -29,37 +29,41 @@ class PlayerPage extends StatelessWidget {
             withBackButton: true,
           ),
           body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
             width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircularSlider(
-                  progressBarColor: track.accentColor,
-                  dotColor: track.dominateColor,
-                  trackColor: track.secondaryColor,
-                  child: ArtCover(
-                    coverArt: track.albumArt,
-                    backgroundColor: track.dominateColor,
-                    heroTag: track.filePath,
+            height: double.infinity,
+            child: FittedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircularSlider(
+                    progressBarColor: track.accentColor,
+                    dotColor: track.dominateColor,
+                    trackColor: track.secondaryColor,
+                    child: ArtCover(
+                      coverArt: track.albumArt,
+                      backgroundColor: track.dominateColor,
+                      heroTag: track.filePath,
+                    ),
                   ),
-                ),
-                Selector<PlayerViewModel, Duration>(
-                  selector: (_, provider) => Duration(seconds: provider.duration.inSeconds - provider.position.inSeconds),
-                  builder: (context, duration, child) => DurationText(
-                    duration: duration,
-                    color: track.accentColor,
-                    fontSize: 18.0,
+                  Selector<PlayerViewModel, Duration>(
+                    selector: (_, provider) => Duration(seconds: provider.duration.inSeconds - provider.position.inSeconds),
+                    builder: (context, duration, child) => DurationText(
+                      duration: duration,
+                      color: track.accentColor,
+                      fontSize: 18.0,
+                    ),
                   ),
-                ),
-                TrackInfo(
-                  title: track.trackName,
-                  artistName: track.albumArtistName,
-                ),
-                SizedBox(height: 16.0),
-                PlayerButtons(),
-                SizedBox(height: 16.0),
-              ],
+                  SizedBox(height: 16.0),
+                  TrackInfo(
+                    title: track.trackName,
+                    artistName: track.albumArtistName,
+                  ),
+                  SizedBox(height: 16.0),
+                  PlayerButtons(),
+                  SizedBox(height: 16.0),
+                ],
+              ),
             ),
           ),
           bottomNavigationBar: PlayerBottomNav(),

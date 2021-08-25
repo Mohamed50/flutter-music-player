@@ -1,11 +1,9 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/viewModel/audio-view-model.dart';
 import 'package:local_music_player/views/customs/customs-container.dart';
 import 'package:local_music_player/views/player.dart';
-import 'package:local_music_player/views/widgets/player/play-button.dart';
 import 'package:local_music_player/views/widgets/player/player-buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +17,7 @@ class MiniAudioPlayer extends StatelessWidget {
       closedElevation: 0.0,
       transitionDuration: Duration(milliseconds: 500),
       closedBuilder: (context, action) => Container(
-        margin:
-            EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0, top: 8.0),
+        margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0, top: 8.0),
         child: AspectRatio(
           aspectRatio: 6 / 1,
           child: Selector<PlayerViewModel, Track>(
@@ -44,9 +41,13 @@ class MiniAudioPlayer extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    track.trackName,
-                                    style: TextStyle(color: track.accentColor),
+                                  Expanded(
+                                    child: Text(
+                                      track.trackName,
+                                      style: TextStyle(color: track.accentColor),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                   Text(
                                     track.albumArtistName,
@@ -65,7 +66,7 @@ class MiniAudioPlayer extends StatelessWidget {
                       Transform.scale(
                         scale: 1.2,
                         child: ClipOval(
-                          child: Image.file(track.albumArt),
+                          child: track.albumArt != null ? Image.file(track.albumArt) : Image.asset("assets/images/collection-album.jpg"),
                         ),
                       ),
                     ],

@@ -15,7 +15,7 @@ class QueuesTracksList extends StatelessWidget {
     return Selector<PlayerViewModel, List<Track>>(
       selector: (_, provider) => provider.playlist,
       builder: (context, tracks, child) => ImplicitlyAnimatedReorderableList<Track>(
-        items: tracks,
+        padding: EdgeInsets.only(top: 16.0, bottom: 64.0),items: tracks,
         areItemsTheSame: (oldItem, newItem) => oldItem.filePath == newItem.filePath,
         itemBuilder: (context, animation, item, i) => Reorderable(
           key: ValueKey(item.filePath),

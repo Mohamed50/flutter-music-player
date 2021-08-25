@@ -46,37 +46,43 @@ class AlbumsList extends StatelessWidget {
                 itemCount: albums.length,
                 padding: EdgeInsets.all(16.0),
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () {
-                    HomePresenter.getInstance().albumClickHandler(albums[index]);
-                  },
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: CardContainer(
-                          shape: BoxShape.circle,
-                          child: ClipOval(
-                            child: Hero(
-                              tag: albums[index].albumName,
-                              child: Image.file(
-                                albums[index].albumArt,
-                                key: ValueKey(index),
-                                fit: BoxFit.cover,
-                                colorBlendMode: BlendMode.overlay,
-                                color: Colors.black38,
+                itemBuilder: (context, index) => AspectRatio(
+                  aspectRatio: 1,
+                  child: InkWell(
+                    onTap: () {
+                      HomePresenter.getInstance().albumClickHandler(albums[index]);
+                    },
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: CardContainer(
+                            shape: BoxShape.circle,
+                            child: ClipOval(
+                              child: Hero(
+                                tag: albums[index].albumName,
+                                child: albums[index].albumArt != null ?  Image.file(
+                                  albums[index].albumArt,
+                                  key: ValueKey(index),
+                                  fit: BoxFit.cover,
+                                  colorBlendMode: BlendMode.overlay,
+                                  color: Colors.black38,
+                                ) : Image.asset("assets/images/collection-album.jpg"),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        albums[index].albumName,
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
+                        SizedBox(height: 8.0),
+                        Text(
+                          albums[index].albumName,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 separatorBuilder: (context, index) => SizedBox(width: 8.0),

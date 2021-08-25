@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:local_music_player/model/schema/track.dart';
 import 'package:local_music_player/presenter/player-presenter.dart';
+import 'package:local_music_player/viewModel/tracks-view-model.dart';
 import 'package:local_music_player/views/customs/customs-container.dart';
+import 'package:provider/provider.dart';
 
 class TrackOptionBottomSheet extends StatelessWidget {
   final Track track;
@@ -73,6 +76,17 @@ class TrackOptionBottomSheet extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Selector<TrackViewModel, bool>(
+                      selector: (_, provider) => provider.isFavorite(track),
+                      builder: (context, value, child) => IconToggle(
+                        value: value,
+                        selectedIconData: Icons.favorite_rounded,
+                        unselectedIconData: Icons.favorite_border_rounded,
+                        activeColor: Theme.of(context).accentColor,
+                        inactiveColor: Theme.of(context).accentColor,
+                        onChanged: (value) => PlayerPresenter.getInstance(context).handleFavoriteButton(track),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -91,7 +105,7 @@ class TrackOptionBottomSheet extends StatelessWidget {
             CustomButton(
               label: "Add to playlist",
               iconData: Icons.playlist_add,
-              onPressed: () {},
+              onPressed: () => PlayerPresenter.getInstance(context).showAddToPlaylistBottomSheet(track),
             ),
           ],
         ),

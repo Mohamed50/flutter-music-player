@@ -4,6 +4,7 @@ import 'package:local_music_player/views/albums.dart';
 import 'package:local_music_player/views/artists.dart';
 import 'package:local_music_player/views/home.dart';
 import 'package:local_music_player/views/mini-audio-player.dart';
+import 'package:local_music_player/views/playlists.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({Key key}) : super(key: key);
@@ -48,7 +49,7 @@ class MenuPage extends StatelessWidget {
               HomePage(),
               AlbumsPage(),
               ArtistsPage(),
-              HomePage(),
+              PlaylistsPage(),
             ],
           ),
         ),

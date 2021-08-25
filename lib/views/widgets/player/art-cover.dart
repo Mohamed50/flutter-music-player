@@ -37,12 +37,12 @@ class ArtCover extends StatelessWidget {
               ClipOval(
                 child: Hero(
                   tag: heroTag,
-                  child: Image.file(
+                  child: coverArt != null ? Image.file(
                     coverArt,
                     fit: BoxFit.cover,
                     colorBlendMode: BlendMode.multiply,
                     color: Colors.black.withOpacity(0.1),
-                  ),
+                  ) : Image.asset("assets/images/collection-album.jpg"),
                 ),
               ),
             ],

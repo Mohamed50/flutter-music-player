@@ -29,8 +29,15 @@ class Track extends MediaType {
     File albumArtFile = File(path.join(configuration.cacheDirectory.path, 'albumArts', '${this.albumArtistName}_${this.albumName}'.replaceAll(new RegExp(r'[^\s\w]'), ' ') + '.PNG'));
     if (albumArtFile.existsSync())
       return albumArtFile;
-    else
-      return null;
+    else if (filePath != null){
+      List<String> temp = filePath.split("/");
+      temp.removeLast();
+      String albumDirPath = temp.join("/");
+      File albumArtFile = File(albumDirPath+ '/Cover.jpg');
+      if(albumArtFile.existsSync())
+        return albumArtFile;
+    }
+    return null;
   }
   String type = 'Track';
   Color dominateColor;
@@ -117,9 +124,18 @@ class Track extends MediaType {
         region: Offset.zero & size,
         maximumColorCount: 20,
       );
-      accentColor = paletteGenerator.dominantColor.color;
-      secondaryColor = paletteGenerator.vibrantColor.titleTextColor;
-      dominateColor = paletteGenerator.vibrantColor.color;
+      if(paletteGenerator.vibrantColor != null) {
+        accentColor = paletteGenerator.dominantColor.color;
+        secondaryColor = paletteGenerator.vibrantColor.titleTextColor;
+        dominateColor = paletteGenerator.vibrantColor.color;
+        if(dominateColor.value == accentColor.value)
+          fetchAccentColor();
+      }
+      else{
+        secondaryColor = paletteGenerator.dominantColor.titleTextColor;
+        dominateColor = paletteGenerator.dominantColor.color;
+        fetchAccentColor();
+      }
       return;
     }
     accentColor = Colors.white;

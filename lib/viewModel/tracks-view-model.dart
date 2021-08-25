@@ -33,10 +33,13 @@ class TrackViewModel with ChangeNotifier {
   List<Album> _albums = <Album>[];
   List<Track> _tracks = <Track>[];
   List<Artist> _artists = <Artist>[];
+  List<Track> _favorites = <Track>[];
 
   List<Album> get albums => _albums;
 
   List<Track> get tracks => _tracks;
+
+  List<Track> get favorites => _favorites;
 
   List<Artist> get artists => _artists;
 
@@ -69,6 +72,7 @@ class TrackViewModel with ChangeNotifier {
       _albums = collection.albums;
       _artists = collection.artists;
       playlists = collection.playlists;
+      _favorites = playlists.first.tracks;
       notifyListeners();
     }
     else {
@@ -90,6 +94,14 @@ class TrackViewModel with ChangeNotifier {
       saveCollectionToCache();
       notifyListeners();
     }
+  }
+
+  addFavoritesToPlaylist(){
+    playlists.add(Playlist(
+      playlistName: "Favorites",
+      tracks: favorites,
+    ));
+    notifyListeners();
   }
 
   fetchTracks() async {
@@ -128,7 +140,7 @@ class TrackViewModel with ChangeNotifier {
       Album album = albums.firstWhere(
         (element) =>
             element.albumName == track.albumName &&
-            element.albumArtistName == track.albumArtistName,
+                (element.albumArtistName == track.albumArtistName || element.albumArtistName.toLowerCase() == "unknown artist" || track.albumArtistName.toLowerCase() == "unknown artist"),
         orElse: () => null,
       );
       if (album != null) {
@@ -172,6 +184,9 @@ class TrackViewModel with ChangeNotifier {
   }
 
   Future saveCollectionToCache() async {
+    if(playlists.isEmpty || !playlists.any((element) => element.playlistName.toLowerCase() == "favorites"))
+      addFavoritesToPlaylist();
+    print(playlists);
     await writeContentToFile(
         configuration.collectionFile,
         Collection(
@@ -186,4 +201,33 @@ class TrackViewModel with ChangeNotifier {
     Map mapCollection = await readContentFromFile(configuration.collectionFile);
     return Collection.fromMap(mapCollection);
   }
+
+  void handleFavorites(Track track) {
+    bool found = favorites.any((element) => element.filePath == track.filePath);
+    if(found)
+      _favorites.removeWhere((element) => element.filePath == track.filePath);
+    else
+      _favorites.add(track);
+    saveCollectionToCache();
+    notifyListeners();
+  }
+
+  bool isFavorite(Track track){
+    print("isFavorite: ${favorites.any((element) => element.filePath == track.filePath)}");
+    return favorites.any((element) => element.filePath == track.filePath);
+  }
+
+  void addToPlaylist(Track track, Playlist playlist) {
+    playlists.firstWhere((element) => element.playlistName == playlist.playlistName).tracks.add(track);
+    notifyListeners();
+    saveCollectionToCache();
+  }
+
+  void addNewPlaylist(Playlist playlist) {
+    playlists.add(playlist);
+    notifyListeners();
+    saveCollectionToCache();
+  }
+
+
 }

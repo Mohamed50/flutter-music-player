@@ -30,8 +30,15 @@ class Album extends MediaType {
             '.PNG'));
     if (albumArtFile.existsSync())
       return albumArtFile;
-    else
-      return null;
+    else if (tracks.first != null){
+      List<String> temp = tracks.first.filePath.split("/");
+      temp.removeLast();
+      String albumDirPath = temp.join("/");
+      File albumArtFile = File(albumDirPath+ '/Cover.jpg');
+      if(albumArtFile.existsSync())
+        return albumArtFile;
+    }
+    return null;
   }
 
   String type = 'Album';
