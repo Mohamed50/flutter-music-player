@@ -11,10 +11,19 @@ Is a Flutter application to play music from your local storage.
 5. play albums, artist tracks or play the whole library
 6. playing audio option (shuffle, linear, repeat)
 
-<img src="https://user-images.githubusercontent.com/24971915/130799383-66384ed6-67c9-4dd4-9159-1a403871d28e.png" width="200" /> 
-<img src="https://user-images.githubusercontent.com/24971915/130816511-da4760e6-9988-4bf1-a090-7847a305c7f6.png" width="200" /> 
-<img src="https://user-images.githubusercontent.com/24971915/130816522-a0dee697-8f58-4bd6-a176-566a45c8ecc7.png" width="200" /> 
-<img src="https://user-images.githubusercontent.com/24971915/130816525-861e6719-c782-4e01-b834-b54ac22e8c3c.png" width="200" /> 
-<img src="https://user-images.githubusercontent.com/24971915/130816530-99f4469d-e365-477d-a67f-b0aeb5e2f7fb.png" width="200" /> 
-<img src="https://user-images.githubusercontent.com/24971915/130816539-810d60e4-3826-4344-b9ac-0169193cab81.png" width="200" /> 
-<img src="https://user-images.githubusercontent.com/24971915/130816543-1fc678dc-57e7-4c70-8b37-f3a1879c3826.png" width="200" /> 
+<table>
+
+<tr>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130799383-66384ed6-67c9-4dd4-9159-1a403871d28e.png" width="200" /></td>
+    <td><img src="https://user-images.githubusercontent.com/24971915/130816511-da4760e6-9988-4bf1-a090-7847a305c7f6.png" width="200" /></td>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130816522-a0dee697-8f58-4bd6-a176-566a45c8ecc7.png" width="200" /></td>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130816525-861e6719-c782-4e01-b834-b54ac22e8c3c.png" width="200" /></td>
+</tr>
+
+<tr> 
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130816530-99f4469d-e365-477d-a67f-b0aeb5e2f7fb.png" width="200" /></td>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130816539-810d60e4-3826-4344-b9ac-0169193cab81.png" width="200" /></td>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130816543-1fc678dc-57e7-4c70-8b37-f3a1879c3826.png" width="200" /></td>
+</tr>
+
+</table>
