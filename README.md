@@ -11,5 +11,4 @@ Is a Flutter application to play music from your local storage.
 5. play albums, artist tracks or play the whole library
 6. playing audio option (shuffle, linear, repeat)
 
-![Screenshot_1629895410_google-pixel4xl-justblack-portrait](https://user-images.githubusercontent.com/24971915/130799383-66384ed6-67c9-4dd4-9159-1a403871d28e.png)
-<img src="https://user-images.githubusercontent.com/24971915/130799383-66384ed6-67c9-4dd4-9159-1a403871d28e.png", width="200" /> 
+<img src="https://user-images.githubusercontent.com/24971915/130799383-66384ed6-67c9-4dd4-9159-1a403871d28e.png" width="200" /> 
