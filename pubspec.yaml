@@ -31,7 +31,7 @@ dependencies:
   permission_handler: ^8.1.4+2
   expandable_bottom_bar: ^2.0.2
   implicitly_animated_reorderable_list: ^0.4.0
-
+  flutter_inner_drawer: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
