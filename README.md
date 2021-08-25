@@ -22,8 +22,9 @@ Is a Flutter application to play music from your local storage.
 
 <tr> 
     <td> <img src="https://user-images.githubusercontent.com/24971915/130816530-99f4469d-e365-477d-a67f-b0aeb5e2f7fb.png" width="200" /></td>
-    <td> <img src="https://user-images.githubusercontent.com/24971915/130816539-810d60e4-3826-4344-b9ac-0169193cab81.png" width="200" /></td>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130820998-09e6188d-226e-49d5-a3de-55a404dc29a5.png" width="200" /></td>
     <td> <img src="https://user-images.githubusercontent.com/24971915/130816543-1fc678dc-57e7-4c70-8b37-f3a1879c3826.png" width="200" /></td>
+    <td> <img src="https://user-images.githubusercontent.com/24971915/130820143-599c4c57-2189-474d-a512-fe486323ffce.png" width="200" /></td>
 </tr>
 
 </table>
